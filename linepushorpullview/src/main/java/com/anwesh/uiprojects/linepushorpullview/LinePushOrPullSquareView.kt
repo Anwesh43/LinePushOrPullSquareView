@@ -52,3 +52,19 @@ fun Canvas.drawLPOPSNode(i : Int, scale : Float, paint : Paint) {
     drawLinePushOrPullSquare(i, w, gap, scale, paint)
     restore()
 }
+
+class LinePushOrPullSquareView(ctx : Context) : View(ctx) {
+
+    override fun onDraw(canvas : Canvas) {
+
+    }
+
+    override fun onTouch(event : MotionEvent) : Boolean {
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+
+            }
+        }
+        return true
+    }
+}
