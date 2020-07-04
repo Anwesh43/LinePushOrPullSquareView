@@ -33,7 +33,10 @@ fun Canvas.drawLinePushOrPullSquare(i : Int, w : Float, gap : Float, scale : Flo
     val sf1 : Float = sf.divideScale(0, parts)
     val sf2 : Float = sf.divideScale(1, parts)
     val sj : Float = 1f - 2 * (i % 2)
+    save()
+    translate(-w / 2, 0f)
     drawLine(0f, 0f, (w / 2 - size / 2) * (sf1 + sf2 * sj), 0f, paint)
+    restore()
     save()
     translate((w / 2 - size / 2) * sj * sf2, 0f)
     drawRect(RectF(-size / 2, -size / 2, size / 2, size / 2), paint)
@@ -136,6 +139,7 @@ class LinePushOrPullSquareView(ctx : Context) : View(ctx) {
 
         fun draw(canvas : Canvas, paint : Paint) {
             canvas.drawLPOPSNode(i, state.scale, paint)
+            next?.draw(canvas, paint)
         }
 
         fun update(cb : (Float) -> Unit) {
@@ -161,11 +165,12 @@ class LinePushOrPullSquareView(ctx : Context) : View(ctx) {
 
     data class LinePushOrPullSquare(var i : Int) {
 
-        private var curr : LPOPSNode = LPOPSNode(0)
+        private val root : LPOPSNode = LPOPSNode(0)
+        private var curr : LPOPSNode = root
         private var dir : Int = 1
 
         fun draw(canvas : Canvas, paint : Paint) {
-            curr.draw(canvas, paint)
+            root.draw(canvas, paint)
         }
 
         fun update(cb : (Float) -> Unit) {
